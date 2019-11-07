@@ -9,9 +9,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/demo', (req, res) => {
+    console.log("demo app");
     res.send('demo');
-    console.log(req);
-});
+    });
 
 
 app.listen(3000, () => {
