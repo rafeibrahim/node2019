@@ -43,7 +43,7 @@ app.get('/animal', async (req, res) => {
     }
 });
 
-app.post('/animal', bodyParser.urlencoded(), async (req, res) => {
+app.post('/animal', bodyParser.urlencoded({extended: true}), async (req, res) => {
     console.log(req.body);
     //res.send('will do asap');
     try{
