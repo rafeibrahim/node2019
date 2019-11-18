@@ -9,15 +9,15 @@ const app = express();
 
 app.use(express.static('public'));
 
-app.get('/animal', async (req, res) => {
+app.get('/animals', async (req, res) => {
 
     // simple query
     try{
         const [results, fields] = await connection.query(
             'SELECT * FROM animal');
     //(err, results, fields) => {
-      console.log(results); // results contains rows returned by server
-      console.log(fields); // fields contains extra meta data about results, if available
+    //  console.log(results); // results contains rows returned by server
+    //  console.log(fields); // fields contains extra meta data about results, if available
       res.json(results);
     } catch (e){
         console.log(e);
@@ -25,6 +25,20 @@ app.get('/animal', async (req, res) => {
 
     }
     
+});
+
+app.get('/animal', async (req, res) => {
+    console.log(req.query);
+    //res.send(`query params? ${req.query}`);
+    // res.send('will be implemented soon');
+    try{
+        const[results] = await connection.query(
+            'SELECT * from animal WHERE name LIKE ?',
+            [req.query.name]);
+            res.json(results);
+    }catch(e){
+        res.send(`db error ${e}`);
+    }
 });
 
 
