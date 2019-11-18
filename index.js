@@ -2,7 +2,9 @@
 
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const connection = require('./model/db.js');
+
 
 
 const app = express();
@@ -41,6 +43,22 @@ app.get('/animal', async (req, res) => {
     }
 });
 
+app.post('/animal', bodyParser.urlencoded(), async (req, res) => {
+    console.log(req.body);
+    //res.send('will do asap');
+    try{
+        const [result] = await connection.query(
+            'INSERT INTO animal (name) VALUES (?)',
+            [req.body.name]
+        );
+        res.json(result);
+
+    }catch(e){
+        console.log(e);
+        res.send('db error...')
+    }
+});
+
 
 app.get('/', (req, res) => {
     res.send('Hello from my Node server');
@@ -55,3 +73,4 @@ app.get('/demo', (req, res) => {
 app.listen(3000, () => {
     console.log(`server app start? listening at por `);
 });
+

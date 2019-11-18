@@ -6,9 +6,24 @@
   </head>
   <body>
     <h1>demo content</h1>
+    <h2>
+      get all
+    </h2>
+    <a href="/animals">get all</a>
+    <h2>
+      search
+    </h2>
     <form action="/animal">
-      <input type="text" name="name">
+      <input type="text" name="name" placeholder="dog">
       <input type="submit" value="search">
     </form>
+    <h2>
+      insert
+    </h2>
+    <form action="/animal" method="post">
+      <input type="text" name="name" placeholder="frog">
+      <input type="submit" value="insert">
+    </form>
+      
   </body>
 </html>
