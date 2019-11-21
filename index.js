@@ -1,9 +1,28 @@
 'use strict'
 const express = require('express');
+const https = require('https');
+const fs = require('fs');
+const http = require('http');
 const bodyParser = require('body-parser');
 const animal = require('./model/animal');
 
 const app = express();
+
+if(process.env.SERVER === 'dev_localhost'){
+    require('./secure/localhost')(app);
+}else{
+        require('./secure/server')(app);
+        app.listen(3000, () => {
+        console.log(`server app start? listening at por `);
+        });
+}
+
+
+
+
+
+
+
 
 app.use(express.static('public'));
 
@@ -12,7 +31,7 @@ app.get('/animals', async (req, res) => {
         res.json(await animal.getAll());
     }catch (e){
         console.log(e);
-        resl.send('db error: (');
+        res.send('db error: (');
     }
 });
 
@@ -45,7 +64,12 @@ app.post('/animal', bodyParser.urlencoded({extended: true}), async (req, res) =>
 
 
 app.get('/', (req, res) => {
-    res.send('Hello from my Node server');
+    if(req.secure){
+        res.send('Hello secure');
+    }else{
+        res.send('Hello from my Node server');
+    }
+    
 });
 
 app.get('/demo', (req, res) => {
@@ -54,7 +78,5 @@ app.get('/demo', (req, res) => {
     });
 
 
-app.listen(3000, () => {
-    console.log(`server app start? listening at por `);
-});
+
 
