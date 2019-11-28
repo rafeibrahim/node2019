@@ -9,6 +9,7 @@ const animal = require('./model/animal');
 const app = express();
 
 if(process.env.SERVER === 'dev_localhost'){
+    console.log('local host detected!');
     require('./secure/localhost')(app);
 }else{
         require('./secure/server')(app);
